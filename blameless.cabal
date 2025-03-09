@@ -70,15 +70,21 @@ common extensions
     default-extensions:
         RecordWildCards
         MultiWayIf
+        TypeFamilies
 
 library
     import:           warnings, extensions
     exposed-modules:
+           Blameless.Effects.Git
+         , Blameless.Effects.Console
+         , Blameless.Effects.FileSystem
+
     other-modules:
         Paths_blameless
     build-depends:
-        effectful,
-        base ^>=4.20.0.0
+          directory
+        , effectful
+        , base ^>=4.20.0.0
     hs-source-dirs:   src
     default-language: GHC2024
 
