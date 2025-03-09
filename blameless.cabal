@@ -1,0 +1,112 @@
+cabal-version:      3.4
+name:               blameless
+version:            0.1.0.0
+synopsis:
+    BlameLess is a tool that automatically updates the .git-blame-ignore-revs file by scanning
+    your Git repository for commits matching specific keywords, ensuring that git blame remains
+    clean and focused on meaningful changes.
+
+description:
+    BlameLess helps maintain clean and useful git blame output by automatically identifying
+    and recording formatting or style commits that should be excluded from blame results.
+
+    Features:
+    * Automatically scans repository history for formatting/style commits
+    * Updates .git-blame-ignore-revs with identified commits
+    * Configurable keywords for identifying non-substantive commits
+    * Integrates seamlessly with standard Git workflows
+
+homepage:           https://github.com/EncodePanda/blameless
+bug-reports:        https://github.com/EncodePanda/blameless/issues
+license:            Apache-2.0
+license-file:       LICENSE
+author:             EncodePanda
+maintainer:         paul.szulc@gmail.com
+copyright:          2024 EncodePanda
+category:           Development
+build-type:         Simple
+extra-doc-files:
+    CHANGELOG.md
+    README.md
+extra-source-files:
+    .gitignore
+    .git-blame-ignore-revs
+
+source-repository head
+    type:     git
+    location: https://github.com/EncodePanda/blameless
+
+common warnings
+    ghc-options:
+        -- all standard warnings
+        -Wall
+        -- warnings about future compatibility issues
+        -Wcompat
+        -- when x == x is evaluated at runtime instead of compile time
+        -Widentities
+        -- when a record update might fail because not all fields are initialized
+        -Wincomplete-record-updates
+        -- when a pattern match might fail
+        -Wincomplete-uni-patterns
+        -- when a module doesn't explicitly export anything
+        -Wmissing-export-lists
+        -- when importing a module not listed in this package
+        -Wmissing-home-modules
+        -- when defining a partial record field
+        -Wpartial-fields
+        -- when a constraint in a type signature is redundant
+        -Wredundant-constraints
+        -- Treat warnings as errors
+        -Werror
+        -- Hide source paths in compiler messages
+        -fhide-source-paths
+        -- Display errors in reverse order (newest first)
+        -freverse-errors
+        -- IDE helpers
+        -fwrite-ide-info
+        -hiedir=.hie
+
+common extensions
+    default-extensions:
+        RecordWildCards
+        MultiWayIf
+
+library
+    import:           warnings, extensions
+    exposed-modules:
+    other-modules:
+        Paths_blameless
+    build-depends:
+        base ^>=4.20.0.0
+    hs-source-dirs:   src
+    default-language: GHC2024
+
+executable blameless
+    import:           warnings, extensions
+    main-is:          Main.hs
+    other-modules:
+        Paths_blameless
+    build-depends:
+        base ^>=4.20.0.0,
+        blameless
+    hs-source-dirs:   app
+    default-language: GHC2024
+    ghc-options:
+        -threaded
+        -rtsopts
+        -with-rtsopts=-N
+
+test-suite blameless-test
+    import:           warnings, extensions
+    default-language: GHC2024
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Main.hs
+    other-modules:
+    build-depends:
+        base ^>=4.20.0.0,
+        blameless
+    ghc-options:
+        -threaded
+        -rtsopts
+        -with-rtsopts=-N
