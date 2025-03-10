@@ -82,9 +82,10 @@ library
     other-modules:
         Paths_blameless
     build-depends:
-          directory
+          base ^>=4.20.0.0
+        , either
         , effectful
-        , base ^>=4.20.0.0
+        , directory
     hs-source-dirs:   src
     default-language: GHC2024
 
@@ -94,9 +95,10 @@ executable blameless
     other-modules:    Blameless.Program
         Paths_blameless
     build-depends:
-        base ^>=4.20.0.0,
-        blameless,
-        effectful
+        base ^>=4.20.0.0
+      , blameless
+      , effectful
+      , either
     hs-source-dirs:   app
     default-language: GHC2024
     ghc-options:
